@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructie & Quiz: Contactpersoon Toevoegen HappyOne & Klantportaal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background: #f5f6fa;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        h2 { /* Hoofdtitel van een sectie */
+            font-size: 2.2em;
+            color: #007bff; 
+            margin-bottom: 20px;
+            border-bottom: 3px solid #007bff; 
+            padding-bottom: 10px;
+        }
+        
+        .section-title-alt { /* Voor sub-secties zoals "Deel 1", "Deel 2" */
+            font-size: 1.8em;
+            color: #0069d9; 
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #0069d9; 
+            padding-left: 10px;
+        }
+
+        h3 { /* Algemene h3, wordt specifiek gemaakt voor step-container */
+            font-size: 1.5em;
+            color: #0056b3; 
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Specifiek voor h3 binnen een stap-container (titel van de stap) */
+        .step-container h3::before {
+            content: "📋"; /* Klembord icoon voor stappen */
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        h4 { /* Algemene h4, wordt specifiek gemaakt hieronder */
+            font-size: 1.2em;
+            color: #495057;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        /* Specifiek voor h4 (Doel, Acties) binnen een stap-container */
+        .step-container h4 {
+            color: #0056b3; /* Donkerder blauw, consistent */
+            margin: 15px 0 8px 0;
+            padding-left: 10px;
+            border-left: 3px solid #007bff; /* Subtiele blauwe linkerborder */
+            /* Emoji's (🎯, 📝) staan direct in HTML */
+        }
+
+
+        p, li {
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        ul {
+            margin: 15px 0 15px 25px;
+            list-style-position: outside;
+        }
+        li {
+             padding-left: 5px;
+        }
+
+
+        .step-container {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 40px 25px 25px 25px; /* Verhoogde top padding */
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #007bff; 
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .highlight { 
+            background: #e3f2fd; /* Lichter blauw voor highlight */
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #0056b3; /* Donkerder blauw voor tekst */
+            border: 1px solid #bbdefb; /* Subtiele border voor highlight */
+        }
+        
+        .info-box { 
+            background: #e2f0fb;
+            border-left: 5px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .info-box h4 { /* h4 binnen info-box specifiek stylen */
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 10px; /* Extra margin toegevoegd */
+            display: flex;
+            align-items: center;
+            border-left: none; /* Verwijder eventuele border van .step-container h4 */
+            padding-left: 0; /* Reset padding */
+        }
+         .info-box h4::before {
+            content: "ℹ️";
+            margin-right: 8px;
+            font-size: 1.2em; /* Iets groter voor duidelijkheid */
+        }
+
+        .quiz { display: none; }
+        .quiz.active { display: block; }
+        .question { margin-bottom: 20px; font-size: 1.3em; font-weight: 600; color: #495057; }
+        .options button { 
+            display: inline-block; 
+            margin: 10px; 
+            padding: 15px 25px; 
+            font-size: 1.1em; 
+            color: white; 
+            background: #007bff; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); 
+        }
+        .options button:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4); 
+            background: #0056b3; 
+        }
+        .options button.correct { 
+            background: #28a745 !important; 
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+        .options button.wrong { 
+            background: #dc3545 !important; 
+             box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+        .options button:disabled { 
+            opacity: 0.6; 
+            cursor: not-allowed; 
+            transform: none; 
+        }
+        .feedback { 
+            font-size: 2em; 
+            margin: 20px 0; 
+            text-align: center; 
+            font-weight: bold; 
+        }
+        .feedback.good { color: #28a745; } 
+        .feedback.wrong { color: #dc3545; } 
+
+        .navigation { text-align: center; margin-top: 30px; }
+        .navigation button { 
+            padding: 12px 25px; 
+            background: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1.1em; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            margin: 0 10px; 
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); 
+        }
+        .navigation button:hover { 
+            background: #0056b3; 
+            transform: translateY(-2px); 
+        }
+        .results-section { text-align: center; padding: 30px; }
+        .results-section p { font-size: 1.8em; margin: 20px 0; color: #495057; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Contactpersoon Toevoegen & Klantportaal Registratie</h1>
+        <p>Stapsgewijze handleiding en kennistoets</p>
+    </header>
+
+    <section>
+        <h2>📚 Instructiegids: Contactpersoon Aanmaken en Registreren</h2>
+        
+        <h3 class="section-title-alt">Deel 1: Contactpersoon Toevoegen in HappyOne</h3>
+
+        <div class="step-container">
+            <div class="step-number">1</div>
+            <h3>Navigeer naar Klantprofiel</h3>
+            <h4>🎯 Doel</h4>
+            <p>Het juiste <span class="highlight">klantprofiel</span> openen om een nieuwe contactpersoon toe te voegen.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Ga in HappyOne naar het <span class="highlight">overzicht van klanten</span>.</li>
+                <li>Zoek en selecteer het <span class="highlight">klantprofiel</span> waaraan je de contactpersoon wilt toevoegen.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">2</div>
+            <h3>Contactpersoon Toevoegen Starten</h3>
+            <h4>🎯 Doel</h4>
+            <p>Het formulier openen voor het invoeren van de gegevens van de nieuwe contactpersoon.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Klik op de knop of link <span class="highlight">"Contactpersoon toevoegen"</span>.</li>
+            </ul>
+        </div>
+        
+        <div class="step-container">
+            <div class="step-number">3</div>
+            <h3>Basisgegevens Invullen</h3>
+            <h4>🎯 Doel</h4>
+            <p>De essentiële persoonlijke gegevens van de contactpersoon invoeren.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Vul de <span class="highlight">voornaam</span> en <span class="highlight">achternaam</span> van de contactpersoon in.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">4</div>
+            <h3>Rol Selecteren</h3>
+            <h4>🎯 Doel</h4>
+            <p>De functie of rol van de contactpersoon binnen de organisatie van de klant specificeren.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Selecteer de juiste <span class="highlight">rol</span>. Bijvoorbeeld, voor een planner kies je <span class="highlight">"operationeel"</span>.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">5</div>
+            <h3>Contactinformatie Invoeren</h3>
+            <h4>🎯 Doel</h4>
+            <p>Telefoonnummer en e-mailadres registreren voor communicatie.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Voer het <span class="highlight">telefoonnummer</span> en <span class="highlight">e-mailadres</span> van de contactpersoon in.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">6</div>
+            <h3>Communicatievoorkeuren Instellen</h3>
+            <h4>🎯 Doel</h4>
+            <p>Aangeven welke e-mailnotificaties de contactpersoon moet ontvangen.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Stel de <span class="highlight">communicatievoorkeuren</span> in. Voor een planner die diensten moet accorderen, vink <span class="highlight">"planning"</span> aan.</li>
+                <li>Dit zorgt ervoor dat de contactpersoon e-mails ontvangt over aangemelde diensten die wachten op accordering (status <span class="highlight">"wacht op klant"</span>).</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">7</div>
+            <h3>Contactpersoon Opslaan</h3>
+            <h4>🎯 Doel</h4>
+            <p>De ingevoerde gegevens van de nieuwe contactpersoon opslaan in HappyOne.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Klik op de knop <span class="highlight">"Toevoegen"</span>.</li>
+            </ul>
+        </div>
+
+        <h3 class="section-title-alt">Deel 2: Contactpersoon Registreren voor Klantportaal</h3>
+
+        <div class="step-container">
+            <div class="step-number">8</div>
+            <h3>Nieuwe Contactpersoon Opzoeken en Opties Openen</h3>
+            <h4>🎯 Doel</h4>
+            <p>De zojuist aangemaakte contactpersoon terugvinden en het optiemenu openen.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Zoek de contactpersoon die je net hebt aangemaakt in de lijst van contactpersonen.</li>
+                <li>Klik op de <span class="highlight">drie puntjes (opties/menu)</span> naast de naam van de contactpersoon.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">9</div>
+            <h3>Registratie Starten</h3>
+            <h4>🎯 Doel</h4>
+            <p>Het registratieproces voor het Klantportaal initiëren.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Klik in het menu op <span class="highlight">"Registreren"</span>.</li>
+            </ul>
+        </div>
+        
+        <div class="step-container">
+            <div class="step-number">10</div>
+            <h3>Bevestig Gebruikerstype</h3>
+            <h4>🎯 Doel</h4>
+            <p>Aangeven dat het om een standaard gebruikersregistratie gaat.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Klik op <span class="highlight">"Gebruiker"</span>.</li>
+            </ul>
+        </div>
+
+        <div class="step-container">
+            <div class="step-number">11</div>
+            <h3>Registratielink Versturen</h3>
+            <h4>🎯 Doel</h4>
+            <p>De definitieve actie om de registratie-uitnodiging naar de contactpersoon te sturen.</p>
+            <h4>📝 Acties</h4>
+            <ul>
+                <li>Klik nogmaals op <span class="highlight">"Registreren"</span>.</li>
+                <li>Een e-mail met een <span class="highlight">registratielink</span> wordt nu automatisch naar het e-mailadres van de contactpersoon gestuurd.</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+             <h4>Ontvangst Registratiemail</h4>
+             <p>De contactpersoon ontvangt een e-mail met instructies en een <span class="highlight">link</span> om de registratie voor het Klantportaal te voltooien. De opmaak (banners/layout) van deze e-mail kan in de toekomst variëren.</p>
+        </div>
+    </section>
+
+    <!-- Quiz Sectie -->
+    <section id="quiz-section">
+        <h2>🎯 Toets je Kennis</h2>
+        <div id="quiz-1" class="quiz active">
+            <div class="question">Wat is de eerste stap in HappyOne nadat je het juiste klantprofiel hebt geopend om een nieuwe contactpersoon toe te voegen?</div>
+            <div class="options">
+                <button onclick="handleQuizAnswer(this, true)">Klikken op "Contactpersoon toevoegen".</button>
+                <button onclick="handleQuizAnswer(this, false)">Direct de naam en e-mail invullen.</button>
+                <button onclick="handleQuizAnswer(this, false)">Eerst de rol "operationeel" selecteren.</button>
+            </div>
+            <div id="feedback-quiz-1" class="feedback"></div>
+            <div class="navigation">
+                <button onclick="nextQuiz(2)">Volgende Vraag</button>
+            </div>
+        </div>
+
+        <div id="quiz-2" class="quiz">
+            <div class="question">Welke combinatie van gegevens wordt specifiek genoemd om in te vullen na de naam?</div>
+            <div class="options">
+                <button onclick="handleQuizAnswer(this, false)">Alleen een intern notitienummer.</button>
+                <button onclick="handleQuizAnswer(this, true)">Rol (bv. "operationeel"), telefoonnummer en e-mailadres.</button>
+                <button onclick="handleQuizAnswer(this, false)">De geboortedatum en afdeling.</button>
+            </div>
+            <div id="feedback-quiz-2" class="feedback"></div>
+            <div class="navigation">
+                <button onclick="prevQuiz(1)">Vorige Vraag</button>
+                <button onclick="nextQuiz(3)">Volgende Vraag</button>
+            </div>
+        </div>
+        
+        <div id="quiz-3" class="quiz">
+            <div class="question">Als een planner mails moet ontvangen over diensten die op accordering wachten, welke communicatievoorkeur vink je dan aan?</div>
+            <div class="options">
+                <button onclick="handleQuizAnswer(this, false)">"Facturatie"</button>
+                <button onclick="handleQuizAnswer(this, true)">"planning"</button>
+                <button onclick="handleQuizAnswer(this, false)">"Algemene nieuwsbrief"</button>
+            </div>
+            <div id="feedback-quiz-3" class="feedback"></div>
+            <div class="navigation">
+                <button onclick="prevQuiz(2)">Vorige Vraag</button>
+                <button onclick="nextQuiz(4)">Volgende Vraag</button>
+            </div>
+        </div>
+
+        <div id="quiz-4" class="quiz">
+            <div class="question">Nadat je een contactpersoon hebt toegevoegd (opgeslagen met "Toevoegen"), hoe start je de registratie voor het Klantportaal?</div>
+            <div class="options">
+                <button onclick="handleQuizAnswer(this, false)">Door de contactpersoon te bellen.</button>
+                <button onclick="handleQuizAnswer(this, true)">Zoek de contactpersoon op, klik op de drie puntjes en dan op "Registreren".</button>
+                <button onclick="handleQuizAnswer(this, false)">Het systeem doet dit automatisch na het klikken op "Toevoegen".</button>
+            </div>
+            <div id="feedback-quiz-4" class="feedback"></div>
+            <div class="navigation">
+                <button onclick="prevQuiz(3)">Vorige Vraag</button>
+                 <button onclick="nextQuiz(5)">Volgende Vraag</button>
+            </div>
+        </div>
+
+         <div id="quiz-5" class="quiz">
+            <div class="question">Wat is de actie na het klikken op "Registreren" (in het menu van de contactpersoon) en vervolgens op "Gebruiker" om de registratiemail daadwerkelijk te versturen?</div>
+            <div class="options">
+                <button onclick="handleQuizAnswer(this, true)">Nogmaals op "Registreren" klikken.</button>
+                <button onclick="handleQuizAnswer(this, false)">Een vinkje zetten bij "E-mail versturen".</button>
+                <button onclick="handleQuizAnswer(this, false)">De contactpersoon selecteren uit een nieuwe lijst.</button>
+            </div>
+            <div id="feedback-quiz-5" class="feedback"></div>
+            <div class="navigation">
+                <button onclick="prevQuiz(4)">Vorige Vraag</button>
+                <button onclick="showResults()">Resultaat Tonen</button>
+            </div>
+        </div>
+
+        <div id="quiz-results" class="quiz">
+            <div class="results-section">
+                <h2>🏆 Resultaten</h2>
+                <p id="result-text"></p>
+                <div class="navigation">
+                    <button onclick="restartQuiz()">Opnieuw Proberen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    let correctAnswers = 0;
+    let totalQuestions = 5; 
+
+    function handleQuizAnswer(button, correct) {
+        const parent = button.parentElement;
+        const feedback = parent.nextElementSibling;
+
+        parent.querySelectorAll('button').forEach(btn => btn.disabled = true);
+
+        if (correct) {
+            correctAnswers++;
+            button.classList.add('correct');
+            feedback.textContent = 'Goed 🎉';
+            feedback.className = 'feedback good';
+        } else {
+            button.classList.add('wrong');
+            feedback.textContent = 'Fout 🚫';
+            feedback.className = 'feedback wrong';
+        }
+    }
+
+    function nextQuiz(quizNumber) {
+        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
+        document.getElementById(`quiz-${quizNumber}`).classList.add('active');
+    }
+
+    function prevQuiz(quizNumber) {
+        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
+        document.getElementById(`quiz-${quizNumber}`).classList.add('active');
+    }
+
+    function showResults() {
+        const percentage = ((correctAnswers / totalQuestions) * 100).toFixed(0);
+
+        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
+        document.getElementById('quiz-results').classList.add('active');
+
+        document.getElementById('result-text').textContent = `Je hebt ${correctAnswers} van de ${totalQuestions} vragen goed beantwoord (${percentage}%).`;
+    }
+
+    function restartQuiz() {
+        correctAnswers = 0;
+        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
+        document.querySelectorAll('.options button').forEach(btn => {
+            btn.disabled = false;
+            btn.classList.remove('correct', 'wrong');
+        });
+        document.querySelectorAll('.feedback').forEach(fb => fb.textContent = '');
+
+        document.getElementById('quiz-1').classList.add('active');
+    }
+</script>
+
+</body>
+</html>
