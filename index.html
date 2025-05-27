@@ -5,248 +5,279 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructie & Quiz: Contactpersoon Toevoegen HappyOne & Klantportaal</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            background: #f5f6fa;
-            line-height: 1.6;
-        }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        background: #f5f6fa;
+        line-height: 1.6;
+    }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-        }
+    .container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
 
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
-        }
+    header {
+        text-align: center;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 30px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    }
 
-        header h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-        }
+    header h1 {
+        font-size: 2.8em;
+        margin-bottom: 10px;
+    }
 
-        header p {
-            font-size: 1.3em;
-            opacity: 0.9;
-        }
+    header p {
+        font-size: 1.3em;
+        opacity: 0.9;
+    }
 
-        section {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
+    h2 {
+        color: #3498db;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
 
-        h2 { /* Hoofdtitel van een sectie */
-            font-size: 2.2em;
-            color: #007bff; 
-            margin-bottom: 20px;
-            border-bottom: 3px solid #007bff; 
-            padding-bottom: 10px;
-        }
-        
-        .section-title-alt { /* Voor sub-secties zoals "Deel 1", "Deel 2" */
-            font-size: 1.8em;
-            color: #0069d9; 
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #0069d9; 
-            padding-left: 10px;
-        }
+    h3 {
+        color: #2c3e50;
+        margin-top: 25px;
+    }
 
-        h3 { /* Algemene h3, wordt specifiek gemaakt voor step-container */
-            font-size: 1.5em;
-            color: #0056b3; 
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        /* Specifiek voor h3 binnen een stap-container (titel van de stap) */
-        .step-container h3::before {
-            content: "📋"; /* Klembord icoon voor stappen */
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-        
-        h4 { /* Algemene h4, wordt specifiek gemaakt hieronder */
-            font-size: 1.2em;
-            color: #495057;
-            margin: 20px 0 10px 0;
-            font-weight: 600;
-        }
+    p {
+        margin-bottom: 15px;
+    }
 
-        /* Specifiek voor h4 (Doel, Acties) binnen een stap-container */
-        .step-container h4 {
-            color: #0056b3; /* Donkerder blauw, consistent */
-            margin: 15px 0 8px 0;
-            padding-left: 10px;
-            border-left: 3px solid #007bff; /* Subtiele blauwe linkerborder */
-            /* Emoji's (🎯, 📝) staan direct in HTML */
-        }
+    ul, ol {
+        margin-bottom: 20px;
+        padding-left: 20px;
+    }
 
+    li {
+        margin-bottom: 8px;
+    }
 
-        p, li {
-            margin-bottom: 12px;
-            font-size: 1.1em;
-        }
+    .section-title-alt {
+        color: #2c3e50;
+        font-size: 1.3em;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
 
-        ul {
-            margin: 15px 0 15px 25px;
-            list-style-position: outside;
-        }
-        li {
-             padding-left: 5px;
-        }
+    ul.fields-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
 
+    ul.fields-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
 
-        .step-container {
-            background: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 12px;
-            padding: 40px 25px 25px 25px; /* Verhoogde top padding */
-            margin: 20px 0;
-            position: relative;
-        }
+    ul.fields-list li:last-child {
+        border-bottom: none;
+    }
 
-        .step-number {
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            background: #007bff; 
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
+    .concept-box {
+        background-color: #e8f4f8;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
 
-        .highlight { 
-            background: #e3f2fd; /* Lichter blauw voor highlight */
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: 600;
-            color: #0056b3; /* Donkerder blauw voor tekst */
-            border: 1px solid #bbdefb; /* Subtiele border voor highlight */
-        }
-        
-        .info-box { 
-            background: #e2f0fb;
-            border-left: 5px solid #007bff;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-        }
+    .step-container {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        position: relative;
+    }
+    
+    .step-number {
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        background: #007bff;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+    }
 
-        .info-box h4 { /* h4 binnen info-box specifiek stylen */
-            color: #0056b3;
-            margin-top: 0;
-            margin-bottom: 10px; /* Extra margin toegevoegd */
-            display: flex;
-            align-items: center;
-            border-left: none; /* Verwijder eventuele border van .step-container h4 */
-            padding-left: 0; /* Reset padding */
-        }
-         .info-box h4::before {
-            content: "ℹ️";
-            margin-right: 8px;
-            font-size: 1.2em; /* Iets groter voor duidelijkheid */
-        }
+    .highlight {
+        background-color: #fffde7;
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
 
-        .quiz { display: none; }
-        .quiz.active { display: block; }
-        .question { margin-bottom: 20px; font-size: 1.3em; font-weight: 600; color: #495057; }
-        .options button { 
-            display: inline-block; 
-            margin: 10px; 
-            padding: 15px 25px; 
-            font-size: 1.1em; 
-            color: white; 
-            background: #007bff; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); 
-        }
-        .options button:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4); 
-            background: #0056b3; 
-        }
-        .options button.correct { 
-            background: #28a745 !important; 
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-        .options button.wrong { 
-            background: #dc3545 !important; 
-             box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
-        }
-        .options button:disabled { 
-            opacity: 0.6; 
-            cursor: not-allowed; 
-            transform: none; 
-        }
-        .feedback { 
-            font-size: 2em; 
-            margin: 20px 0; 
-            text-align: center; 
-            font-weight: bold; 
-        }
-        .feedback.good { color: #28a745; } 
-        .feedback.wrong { color: #dc3545; } 
+    .warning-box {
+        background-color: #fff5f5;
+        border-left: 4px solid #e74c3c;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
 
-        .navigation { text-align: center; margin-top: 30px; }
-        .navigation button { 
-            padding: 12px 25px; 
-            background: #007bff; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 1.1em; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            margin: 0 10px; 
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); 
-        }
-        .navigation button:hover { 
-            background: #0056b3; 
-            transform: translateY(-2px); 
-        }
-        .results-section { text-align: center; padding: 30px; }
-        .results-section p { font-size: 1.8em; margin: 20px 0; color: #495057; }
+    .warning-box::before {
+        content: '⚠️ Let op:';
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        color: #e74c3c;
+    }
 
-    </style>
+    .info-box {
+        background-color: #f0f7ff;
+        border-left: 4px solid #5bc0de;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .info-box::before {
+        content: 'ℹ️ Info:';
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        color: #5bc0de;
+    }
+
+    .quiz {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        display: none;
+    }
+
+    .quiz.active {
+        display: block;
+    }
+
+    .question {
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #2c3e50;
+    }
+
+    .options {
+        margin-bottom: 15px;
+    }
+
+    .options button {
+        display: block; /* Knoppen onder elkaar voor betere leesbaarheid */
+        width: 100%; /* Volledige breedte */
+        text-align: left;
+        margin: 8px 0; /* Aanpassing marge */
+        padding: 15px 20px; /* Aanpassing padding */
+        font-size: 1.05em; /* Iets kleinere font-size voor meer tekst */
+        color: white;
+        background: #007bff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    }
+
+    .options button:hover {
+        transform: translateY(-2px) translateX(2px); /* Subtiele hover animatie */
+        box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
+    }
+
+    .options button.correct {
+        background: #28a745 !important;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .options button.wrong {
+        background: #dc3545 !important;
+        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .options button:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+        transform: none;
+    }
+
+    .feedback {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .feedback.good {
+        color: #28a745;
+    }
+
+    .feedback.wrong {
+        color: #dc3545;
+    }
+
+    .navigation {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .navigation button {
+        padding: 12px 25px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 0 10px;
+        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+
+    .navigation button:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    #quiz-results {
+        text-align: center;
+    }
+
+    #result-text {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
-    <header>
-        <h1>Contactpersoon Toevoegen & Klantportaal Registratie</h1>
-        <p>Stapsgewijze handleiding en kennistoets</p>
-    </header>
+        <header>
+            <h1>Contactpersoon toevoegen aan HappyOne & klantportaal</h1>
+            <p>📚 Instructiegids: Contactpersoon Toevoegen</p>
+        </header>
 
-    <section>
-        <h2>📚 Instructiegids: Contactpersoon Aanmaken en Registreren</h2>
+    <section class="instruction-section">
+        <h2 class="section-title-alt">🔄 Stappen voor Contactpersoon Toevoegen</h2>
         
         <h3 class="section-title-alt">Deel 1: Contactpersoon Toevoegen in HappyOne</h3>
 
@@ -469,11 +500,11 @@
 
 <script>
     let correctAnswers = 0;
-    let totalQuestions = 5; 
+    const totalQuestions = 3; // Aangepast naar het aantal vragen
 
     function handleQuizAnswer(button, correct) {
         const parent = button.parentElement;
-        const feedback = parent.nextElementSibling;
+        const feedback = parent.nextElementSibling; // feedback-quiz-X div
 
         parent.querySelectorAll('button').forEach(btn => btn.disabled = true);
 
@@ -489,36 +520,48 @@
         }
     }
 
+    function navigateToQuiz(quizIdToShow) {
+        document.querySelectorAll('.quiz').forEach(quizDiv => {
+            quizDiv.classList.remove('active');
+        });
+        const targetQuiz = document.getElementById(quizIdToShow);
+        if (targetQuiz) {
+            targetQuiz.classList.add('active');
+        }
+    }
+
     function nextQuiz(quizNumber) {
-        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
-        document.getElementById(`quiz-${quizNumber}`).classList.add('active');
+        navigateToQuiz(`quiz-${quizNumber}`);
     }
 
     function prevQuiz(quizNumber) {
-        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
-        document.getElementById(`quiz-${quizNumber}`).classList.add('active');
+        navigateToQuiz(`quiz-${quizNumber}`);
     }
 
     function showResults() {
-        const percentage = ((correctAnswers / totalQuestions) * 100).toFixed(0);
-
-        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
-        document.getElementById('quiz-results').classList.add('active');
-
+        const percentage = totalQuestions > 0 ? ((correctAnswers / totalQuestions) * 100).toFixed(0) : 0;
         document.getElementById('result-text').textContent = `Je hebt ${correctAnswers} van de ${totalQuestions} vragen goed beantwoord (${percentage}%).`;
+        navigateToQuiz('quiz-results');
     }
 
     function restartQuiz() {
         correctAnswers = 0;
-        document.querySelectorAll('.quiz').forEach(quiz => quiz.classList.remove('active'));
         document.querySelectorAll('.options button').forEach(btn => {
             btn.disabled = false;
             btn.classList.remove('correct', 'wrong');
         });
-        document.querySelectorAll('.feedback').forEach(fb => fb.textContent = '');
-
-        document.getElementById('quiz-1').classList.add('active');
+        document.querySelectorAll('.feedback').forEach(fb => {
+            fb.textContent = '';
+            // Zorg ervoor dat de class weer neutraal is als je 'good'/'wrong' direct op feedback div zet
+            fb.className = 'feedback'; 
+        });
+        navigateToQuiz('quiz-1');
     }
+
+    // Zorg dat de eerste quiz zichtbaar is bij het laden
+    document.addEventListener('DOMContentLoaded', () => {
+        navigateToQuiz('quiz-1');
+    });
 </script>
 
 </body>
